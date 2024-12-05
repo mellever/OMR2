@@ -29,13 +29,22 @@ def get_training(name, data_train, data_val):
                                LEARNING_RATE, TRUNCATION_DEPTH, NORMALISE_SIG)
 
 def main():
-    torch.autograd.set_detect_anomaly(True)
-    data = get_data(DATA_ID)[0]
-    data_train, data_val, data_test = get_data(DATA_ID)[1]
+    #No clue what this does
+    torch.autograd.set_detect_anomaly(True) 
+
+    #Gets the data from historic source or simulation and splits it in training and evaluation data
+    #DATA_ID determines the type of system
+    data = get_data(DATA_ID)[0] #Get evaluation data
+    data_train, data_val, data_test = get_data(DATA_ID)[1] #Get training data
+
+    #Training
     training = get_training(DISCRIMINATOR_ID, data_train, data_val)
     training.fit()
-    evaluation = Evaluation(training, data_train, data_test, data.scaler, GENERATOR_ID, DISCRIMINATOR_ID, ACTIVATION_ID,
-                            DATA_ID)
+
+    #Evaluation
+    evaluation = Evaluation(training, data_train, data_test, data.scaler, GENERATOR_ID, DISCRIMINATOR_ID, ACTIVATION_ID, DATA_ID)
+    
+    #Same statistics
     evaluation.print_summary()
     evaluation.plot_paths(50)
     evaluation.save_paths()

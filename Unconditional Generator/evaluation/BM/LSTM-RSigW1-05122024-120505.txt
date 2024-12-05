@@ -1,0 +1,44 @@
+-------------------------------
+TRAINING SUMMARY
+------------------------------
+Generator: LSTM
+Discriminator: RSigW1
+Activation: Sigmoid
+Gradient steps: 10
+Learning rate: 0.0001
+Reservoir dimension: 80
+Data dimension: 1
+-------------------------------
+Drift BM: 0.0
+Std BM: 1.0
+Drift GBM: 0.0
+Std GBM: 1.0
+Phi AR: -0.1
+Std AR: 1.0
+-------------------------------
+RSigW1:
+Training error: 2.0355e+00
+Test error: 2.0341e+00
+-------------------------------
+Correlation Metric:
+Training error: 3.6954e+00
+Test error: 3.6938e+00
+-------------------------------
+Autocorrelation Metric:
+Training error: 1.0174e+00
+Test error: 1.0163e+00
+-------------------------------
+Results of Normality Test:
+Normaltest #1: False
+Normaltest #2: False
+Normaltest #3: False
+Normaltest #4: False
+Normaltest #5: False
+Normaltest #6: False
+Normaltest #7: False
+Normaltest #8: False
+Normaltest #9: False
+-------------------------------
+defaultdict(<class 'list'>, {'RSigW1Loss': [2.1686458587646484, 2.222388505935669, 2.2995917797088623, 2.30450439453125, 2.274512529373169, 2.2100918292999268, 2.1121609210968018, 2.03405499458313, 2.038374662399292, 2.049577236175537]})
+-------------------------------
+defaultdict(<class 'list'>, {})

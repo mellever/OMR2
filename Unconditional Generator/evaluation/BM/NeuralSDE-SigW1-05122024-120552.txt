@@ -1,0 +1,44 @@
+-------------------------------
+TRAINING SUMMARY
+------------------------------
+Generator: NeuralSDE
+Discriminator: SigW1
+Activation: Sigmoid
+Gradient steps: 10
+Learning rate: 0.0001
+Reservoir dimension: 80
+Data dimension: 1
+-------------------------------
+Drift BM: 0.0
+Std BM: 1.0
+Drift GBM: 0.0
+Std GBM: 1.0
+Phi AR: -0.1
+Std AR: 1.0
+-------------------------------
+SigW1:
+Training error: 7.0071e+03
+Test error: 7.0067e+03
+-------------------------------
+Correlation Metric:
+Training error: 9.8590e+00
+Test error: 9.8609e+00
+-------------------------------
+Autocorrelation Metric:
+Training error: 1.1745e+00
+Test error: 1.1734e+00
+-------------------------------
+Results of Normality Test:
+Normaltest #1: True
+Normaltest #2: True
+Normaltest #3: True
+Normaltest #4: True
+Normaltest #5: True
+Normaltest #6: False
+Normaltest #7: True
+Normaltest #8: False
+Normaltest #9: True
+-------------------------------
+defaultdict(<class 'list'>, {'SigW1Loss': [346189.59375, 221136.1875, 150975.578125, 100372.921875, 65857.671875, 44988.890625, 30557.80078125, 19323.16015625, 13394.6640625, 9580.466796875]})
+-------------------------------
+defaultdict(<class 'list'>, {})
