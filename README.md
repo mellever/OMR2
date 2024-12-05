@@ -13,8 +13,8 @@ Now proceed to install the rest of the packages:
 Now run main.py and check if no errors occur.
 
 ## Where to configure the code?
-All configuration is done in the config.py file. 
+All configuration is done in the config.py file. For now the settings are the same as in what they used in the paper (which is different from the default!). To reduce runtime (but at the cost of worse results) for e.g. testing , change GRADIENT_STEPS to a smaller number (250 takes ~10 sec). 
 
 ## Adding other examples?
-In data.py new data can be generated which can be used.
+In data.py new data can be generated which can be used in the code. Should be quite straight forward to implement our own examples. 
 
