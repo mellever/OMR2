@@ -10,7 +10,7 @@ Now proceed to install the rest of the packages:
 
     pip install numpy seaborn signatory scipy yfinance
 
-Now run main.py and check if no errors occur.
+For now I only changed the CONDITIONAL code, so run the main.py  in this folder and check if no errors occur.
 
 ## Where to configure the code?
 All configuration is done in the config.py file. For now the settings are the same as in what they used in the paper (which is different from the default!). To reduce runtime (but at the cost of worse results) for e.g. testing , change GRADIENT_STEPS to a smaller number (250 takes ~10 sec). 
