@@ -1,0 +1,33 @@
+-------------------------------
+TRAINING SUMMARY
+------------------------------
+Generator: NeuralSDE
+Discriminator: RSigW1
+Activation: Sigmoid
+Gradient steps: 10
+Learning rate: 0.0001
+Reservoir dimension: 80
+Data dimension: 1
+-------------------------------
+Drift BM: 0.0
+Std BM: 1.0
+Drift GBM: 0.1
+Std GBM: 0.2
+Phi AR: -0.1
+Std AR: 1.0
+-------------------------------
+RSigW1:
+Training error: 2.9225e+03
+Test error: 2.9085e+03
+-------------------------------
+Correlation Metric:
+Training error: 4.3823e+05
+Test error: 4.2429e+05
+-------------------------------
+Autocorrelation Metric:
+Training error: 7.4704e-01
+Test error: 7.4308e-01
+-------------------------------
+defaultdict(<class 'list'>, {'RSigW1Loss': [2934.9970703125, 2933.89794921875, 2932.877197265625, 2932.0908203125, 2930.787353515625, 2929.403564453125, 2928.009521484375, 2926.89990234375, 2925.4345703125, 2923.754150390625]})
+-------------------------------
+defaultdict(<class 'list'>, {})

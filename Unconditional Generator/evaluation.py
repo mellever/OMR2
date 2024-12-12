@@ -195,3 +195,51 @@ class Evaluation:
           fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-plot.pdf".
                       format(self.data_type, self.generator_id, self.discriminator_id,
                             self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
+
+    def plot_mean(self):
+      mean_train = np.mean(to_numpy(self.x_train_scale_inverse), axis=0)
+      mean_fake = np.mean(to_numpy(self.x_fake_scale_inverse), axis=0)
+
+      fig = plt.figure()
+      plt.plot(mean_train, label="train")
+      plt.plot(mean_fake, label="fake")
+      #plt.yscale("log")
+      plt.ylabel("Mean")
+      plt.xlabel("Time")
+      plt.legend()
+      plt.show()
+
+      try:
+          os.makedirs("best_generators/{}".format(self.data_type))
+          fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-mean.pdf".
+                      format(self.data_type, self.generator_id, self.discriminator_id,
+                            self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
+      except FileExistsError:
+        fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-mean.pdf".
+                    format(self.data_type, self.generator_id, self.discriminator_id,
+                          self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
+
+    def plot_var(self):
+      var_train = np.var(to_numpy(self.x_train_scale_inverse), axis=0)
+      var_fake = np.var(to_numpy(self.x_fake_scale_inverse), axis=0)
+
+      fig = plt.figure()
+      plt.plot(var_train, label="train")
+      plt.plot(var_fake, label="fake")
+      #plt.yscale("log")
+      plt.ylabel("Variance")
+      plt.xlabel("Time")
+      plt.legend()
+      plt.show()
+
+      try:
+          os.makedirs("best_generators/{}".format(self.data_type))
+          fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-var.pdf".
+                      format(self.data_type, self.generator_id, self.discriminator_id,
+                            self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
+      except FileExistsError:
+        fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-var.pdf".
+                    format(self.data_type, self.generator_id, self.discriminator_id,
+                          self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
+    
+

@@ -31,7 +31,7 @@ class BM(Data):
     Class implementing generation of Brownian motion paths
     """
 
-    def __init__(self, n_lags: int, drift: float = 0.0, std: float = 1.0, dim: int = 1, T: float = 1.0):
+    def __init__(self, n_lags: int, drift: float = 0.0, std: float = 1.0, dim: int = 1, T: float = 100.0):
         super().__init__(n_lags)
         self.drift = drift
         self.std = std
@@ -44,6 +44,26 @@ class BM(Data):
         path[:, 1:, :] = self.drift * self.h + math.sqrt(self.h) * self.std * torch.randn(samples, self.n_lags - 1,
                                                                                           self.dim)
         return torch.cumsum(path, 1)
+
+class GBM(Data):
+    """
+    Class implementing generation of geometric Brownian motion paths
+    """
+    
+    def __init__(self, n_lags: int, drift: float = 0.0, std: float = 1.0, initial: float = 1.0, dim: int = 1, T: float = 1.0):
+        super().__init__(n_lags)
+        self.drift = drift
+        self.std = std
+        self.dim = dim
+        self.h = T / n_lags
+        self.scaler = IDScaler()
+        self.initial = initial
+    
+    def generate(self, samples: int) -> torch.tensor:
+        paths = torch.full([samples, self.n_lags, self.dim], self.initial)
+        for i in range(1, self.n_lags):
+            paths[:, i, :] = paths[:, i - 1, :] + self.drift*paths[:, i - 1, :]*self.h + self.std*paths[:, i - 1, :]*math.sqrt(self.h)*torch.randn(samples, self.dim)
+        return paths
 
 
 class AR(Data):
@@ -153,7 +173,7 @@ def get_data(id: str) -> torch.tensor:
         paths = data.generate(SAMPLES_BM)
     elif id == "GBM":
         data = GBM(N_LAGS, DRIFT_GBM, STD_GBM, INIT_GBM, DATA_DIM)
-        paths = data.generate(SAMPLES_BM)
+        paths = data.generate(SAMPLES_GBM)
     elif id == "SP500":
         data = SP500(N_LAGS)
         paths = data.generate()

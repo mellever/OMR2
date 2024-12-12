@@ -49,6 +49,8 @@ def main():
     evaluation.plot_paths(50)
     evaluation.save_paths()
     evaluation.save_best_generator()
+    evaluation.plot_mean()
+    evaluation.plot_var()
 
 if __name__ == '__main__':
     main()

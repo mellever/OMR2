@@ -11,14 +11,14 @@ N_LAGS = 10
 DATA_DIM = 1
 
 # Brownian motion
-SAMPLES_BM = 10000
-DRIFT_BM = 0.0
-STD_BM = 1.0
+SAMPLES_BM = 100000
+DRIFT_BM = 0.1
+STD_BM = 0.2
 
 # Geometric Brownian motion
 SAMPLES_GBM = 50000
-DRIFT_GBM = 0.0
-STD_GBM = 1.0
+DRIFT_GBM = 0.1
+STD_GBM = 0.1
 INIT_GBM = 1.0
 
 # AR process
@@ -28,8 +28,8 @@ STD_AR = 1.0
 
 # Hyperparameters training
 LEARNING_RATE = 1e-4
-GRADIENT_STEPS = 2500
-BATCH_SIZE = 1500
+GRADIENT_STEPS = 500
+BATCH_SIZE = 100
 
 # R-SIG-W1
 RESERVOIR_DIM_METRIC = 80
