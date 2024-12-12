@@ -10,6 +10,9 @@ from scipy import stats
 
 
 def l2_dist(x, y: float) -> float:
+    # Ensure both tensors are on the same device (CPU or CUDA)
+    device = x.device
+    y = y.to(device)  # Move `y` to the same device as `x`
     return (x - y).pow(2).sum().sqrt()
 
 
@@ -83,7 +86,8 @@ def acf_diff(x_real, x_fake, lag, dim=(0, 1)):
 
 
 def p_val_normaltest(x_fake, timestep):
-    x_trunc = x_fake[timestep].detach().numpy()
+    #Tensor on CUDA can't be directly converted to numpy. cpu() ensures we move the tensor to the cpu first.
+    x_trunc = x_fake[timestep].detach().cpu().numpy()
     return stats.shapiro(x_trunc)[1]
 
 

@@ -1,0 +1,13 @@
+#Ignore PyCache
+Unconditional Generator/__pycache__/
+Conditional Generator/__pycache__/
+
+#Ignore Evaluation (Local)
+Conditional Generator/best_generators/
+Conditional Generator/evaluation/
+
+Unconditional Generator/best_generators/
+Unconditional Generator/evaluation/
+
+best_generators/
+evaluation/
