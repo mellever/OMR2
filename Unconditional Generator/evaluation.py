@@ -32,6 +32,10 @@ class Evaluation:
         self.batch_size = self.training.batch_size
         self.device = device
         self.x_fake = self.best_generator(batch_size=self.batch_size, n_lags=self.n_lags).to(self.device)
+        self.t = np.linspace(0, TIME, N_LAGS)
+
+
+
         
         if self.discriminator_id == "RSigW1":
             self.expected_rsig_x_train = compute_rsig_td(self.x_train, self.training.A1, self.training.A2,
@@ -177,69 +181,47 @@ class Evaluation:
 
     def plot_paths(self, num_paths=50):
         fig = plt.figure()
-        ax = fig.add_subplot(111)
         sns.set_theme()
         for i in range(num_paths):
-            plt.plot(to_numpy(self.x_fake_scale_inverse)[i], color="darkblue", linewidth=0.7)
-            plt.plot(to_numpy(self.x_train_scale_inverse)[i], color="dimgrey", linewidth=0.7)
-        ax.set_title("Real and generated {} paths".format(self.data_type))
-        ax.legend(["Fake", "Real"])
-        ax.set_xlabel("Time")
-        plt.show()
-        try:
-          os.makedirs("best_generators/{}".format(self.data_type))
-          fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-plot.pdf".
-                      format(self.data_type, self.generator_id, self.discriminator_id,
-                            self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
-        except FileExistsError:
-          fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-plot.pdf".
-                      format(self.data_type, self.generator_id, self.discriminator_id,
-                            self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
+            if i==0:
+              plt.plot(self.t, to_numpy(self.x_train_scale_inverse)[i], color="tab:blue", linewidth=0.7, label="Training")
+              plt.plot(self.t, to_numpy(self.x_fake_scale_inverse)[i], color="tab:orange", linewidth=0.7, label="Generated")
+            else:
+              plt.plot(self.t, to_numpy(self.x_train_scale_inverse)[i], color="tab:blue", linewidth=0.7)
+              plt.plot(self.t, to_numpy(self.x_fake_scale_inverse)[i], color="tab:orange", linewidth=0.7)
+
+        plt.title("Real and generated {} paths".format(self.data_type))
+        plt.legend()
+        plt.xlabel("Time")
+        plt.ylabel("X")
+        fig.savefig(FIG_PATH+"paths.pdf")
 
     def plot_mean(self):
       mean_train = np.mean(to_numpy(self.x_train_scale_inverse), axis=0)
       mean_fake = np.mean(to_numpy(self.x_fake_scale_inverse), axis=0)
 
       fig = plt.figure()
-      plt.plot(mean_train, label="train")
-      plt.plot(mean_fake, label="fake")
+      plt.plot(self.t, mean_train, label="Training", marker='o')
+      plt.plot(self.t, mean_fake, label="Generated", marker='o')
       #plt.yscale("log")
       plt.ylabel("Mean")
       plt.xlabel("Time")
       plt.legend()
-      plt.show()
+      fig.savefig(FIG_PATH+"mean.pdf")
 
-      try:
-          os.makedirs("best_generators/{}".format(self.data_type))
-          fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-mean.pdf".
-                      format(self.data_type, self.generator_id, self.discriminator_id,
-                            self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
-      except FileExistsError:
-        fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-mean.pdf".
-                    format(self.data_type, self.generator_id, self.discriminator_id,
-                          self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
 
     def plot_var(self):
       var_train = np.var(to_numpy(self.x_train_scale_inverse), axis=0)
       var_fake = np.var(to_numpy(self.x_fake_scale_inverse), axis=0)
 
       fig = plt.figure()
-      plt.plot(var_train, label="train")
-      plt.plot(var_fake, label="fake")
+      plt.plot(self.t, var_train, label="Training", marker='o')
+      plt.plot(self.t, var_fake, label="Generated", marker='o')
       #plt.yscale("log")
       plt.ylabel("Variance")
-      plt.xlabel("Time")
+      plt.xlabel("Timesteps")
       plt.legend()
+      fig.savefig(FIG_PATH+"var.pdf")
       plt.show()
-
-      try:
-          os.makedirs("best_generators/{}".format(self.data_type))
-          fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-var.pdf".
-                      format(self.data_type, self.generator_id, self.discriminator_id,
-                            self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
-      except FileExistsError:
-        fig.savefig("best_generators/{}/{}-{}-{}-{}-{}-var.pdf".
-                    format(self.data_type, self.generator_id, self.discriminator_id,
-                          self.activation, self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
     
 
