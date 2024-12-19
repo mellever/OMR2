@@ -12,18 +12,18 @@ FIG_PATH = "/home/melle/OneDrive/Master/Year2/OrientationMathematicalResearch/Pr
 # Timeseries
 N_LAGS = 6 #Number of timesteps
 DATA_DIM = 1 #Dimension of the timeseries
-TIME = 0.5 #Final time
+TIME = 0.5 #Final time (T in experiments)
 
 # Brownian motion
 SAMPLES_BM = 10000
 DRIFT_BM = 0.1
-STD_BM = 0.2
+STD_BM = 0.2 
 
 # Geometric Brownian motion
-SAMPLES_GBM = 100000
-DRIFT_GBM = 1
-STD_GBM = 0.5
-INIT_GBM = 100.0
+SAMPLES_GBM = 100000 #Number of samples 
+DRIFT_GBM = 1 #Mu
+STD_GBM = 0.5 #Sigma
+INIT_GBM = 100.0 #X0
 
 # AR process
 SAMPLES_AR = 50000
