@@ -41,8 +41,7 @@ class BM(Data):
 
     def generate(self, samples: int) -> torch.tensor:
         path = torch.zeros([samples, self.n_lags, self.dim])
-        path[:, 1:, :] = self.drift * self.h + math.sqrt(self.h) * self.std * torch.randn(samples, self.n_lags - 1,
-                                                                                          self.dim)
+        path[:, 1:, :] = self.drift * self.h + math.sqrt(self.h) * self.std * torch.randn(samples, self.n_lags - 1, self.dim)
         return torch.cumsum(path, 1)
 
 class GBM(Data):

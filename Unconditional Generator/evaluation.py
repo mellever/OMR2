@@ -8,6 +8,7 @@ import torch
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from scipy.stats import chi2
 from datetime import datetime
 from rsigw1 import *
 from sigw1 import *
@@ -180,6 +181,9 @@ class Evaluation:
                           self.num_epochs, datetime.now().strftime("%d%m%Y-%H%M%S")))
 
     def plot_paths(self, num_paths=50):
+        #Restore printing
+        sys.stdout = sys.__stdout__ 
+
         fig = plt.figure()
         sns.set_theme()
         for i in range(num_paths):
@@ -190,20 +194,30 @@ class Evaluation:
               plt.plot(self.t, to_numpy(self.x_train_scale_inverse)[i], color="tab:blue", linewidth=0.7)
               plt.plot(self.t, to_numpy(self.x_fake_scale_inverse)[i], color="tab:orange", linewidth=0.7)
 
-        plt.title("Real and generated {} paths".format(self.data_type))
         plt.legend()
         plt.xlabel("Time")
         plt.ylabel("X")
         fig.savefig(FIG_PATH+"paths.pdf")
 
     def plot_mean(self):
-      mean_train = np.mean(to_numpy(self.x_train_scale_inverse), axis=0)
-      mean_fake = np.mean(to_numpy(self.x_fake_scale_inverse), axis=0)
+      #Convert data to numpy
+      train_data = to_numpy(self.x_train_scale_inverse) #Shape  = (0.2*SAMPLES, N_LAGS, DATA_DIM)
+      fake_data = to_numpy(self.x_fake_scale_inverse) #Shape  = (BATCH_SIZE, N_LAGS, DATA_DIM)
+      
+      #Compute mean
+      mean_train = np.mean(train_data, axis=0)[:,0]
+      mean_fake = np.mean(fake_data, axis=0)[:,0]
 
+      #Compute 95% confidence intervals
+      ci_train = 1.96 * np.std(train_data, axis=0)[:,0] / np.sqrt(len(train_data))
+      ci_fake = 1.96 * np.std(fake_data, axis=0)[:,0] / np.sqrt(len(fake_data))
+
+      #Plot the mean and the 95% confidence intervals
       fig = plt.figure()
-      plt.plot(self.t, mean_train, label="Training", marker='o')
-      plt.plot(self.t, mean_fake, label="Generated", marker='o')
-      #plt.yscale("log")
+      plt.plot(self.t, mean_train, label="Training", marker='o', color="tab:blue")
+      plt.fill_between(self.t, mean_train - ci_train, mean_train + ci_train, color='blue', alpha=0.2)
+      plt.plot(self.t, mean_fake, label="Generated", marker='o', color="tab:orange")
+      plt.fill_between(self.t, mean_fake - ci_fake, mean_fake + ci_fake, color='orange', alpha=0.2)
       plt.ylabel("Mean")
       plt.xlabel("Time")
       plt.legend()
@@ -211,15 +225,32 @@ class Evaluation:
 
 
     def plot_var(self):
-      var_train = np.var(to_numpy(self.x_train_scale_inverse), axis=0)
-      var_fake = np.var(to_numpy(self.x_fake_scale_inverse), axis=0)
+      #Convert data to numpy
+      train_data = to_numpy(self.x_train_scale_inverse) #Shape  = (0.2*SAMPLES, N_LAGS, DATA_DIM)
+      fake_data = to_numpy(self.x_fake_scale_inverse) #Shape  = (BATCH_SIZE, N_LAGS, DATA_DIM)
+
+      #Compute the variance
+      var_train = np.var(train_data, axis=0)[:,0]
+      var_fake = np.var(fake_data, axis=0)[:,0]
+
+      #Determine lengths
+      n_train = len(train_data)
+      n_fake = len(fake_data)
+
+      # Compute the 95% confidence interval for the variance (using chi-squared distribution)
+      ci_train_lower = ((n_train - 1) * var_train) / chi2.ppf(0.975, df=n_train - 1)
+      ci_train_upper = ((n_train - 1) * var_train) / chi2.ppf(0.025, df=n_train - 1)
+      
+      ci_fake_lower = ((n_fake - 1) * var_fake) / chi2.ppf(0.975, df=n_fake - 1)
+      ci_fake_upper = ((n_fake - 1) * var_fake) / chi2.ppf(0.025, df=n_fake - 1)
 
       fig = plt.figure()
-      plt.plot(self.t, var_train, label="Training", marker='o')
-      plt.plot(self.t, var_fake, label="Generated", marker='o')
-      #plt.yscale("log")
+      plt.plot(self.t, var_train, label="Training", marker='o', color="tab:blue")
+      plt.fill_between(self.t, ci_train_lower, ci_train_upper, color='blue', alpha=0.2)
+      plt.plot(self.t, var_fake, label="Generated", marker='o', color="tab:orange")
+      plt.fill_between(self.t, ci_fake_lower, ci_fake_upper, color='orange', alpha=0.2)
       plt.ylabel("Variance")
-      plt.xlabel("Timesteps")
+      plt.xlabel("Time")
       plt.legend()
       fig.savefig(FIG_PATH+"var.pdf")
       plt.show()

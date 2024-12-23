@@ -7,12 +7,12 @@ import torch
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Path for saving figures
-FIG_PATH = "/home/melle/OneDrive/Master/Year2/OrientationMathematicalResearch/Project2/experiments/figures/"
+FIG_PATH = "/home/melle/OneDrive/Master/Year2/OrientationMathematicalResearch/Project2/experiments/figures_with_ci/"
 
 # Timeseries
 N_LAGS = 6 #Number of timesteps
 DATA_DIM = 1 #Dimension of the timeseries
-TIME = 0.5 #Final time (T in experiments)
+TIME = 5.0 #Final time (T in experiments)
 
 # Brownian motion
 SAMPLES_BM = 10000
@@ -20,10 +20,10 @@ DRIFT_BM = 0.1
 STD_BM = 0.2 
 
 # Geometric Brownian motion
-SAMPLES_GBM = 100000 #Number of samples 
-DRIFT_GBM = 1 #Mu
+SAMPLES_GBM = 10000 #Number of samples 
+DRIFT_GBM = 1.0 #Mu
 STD_GBM = 0.5 #Sigma
-INIT_GBM = 100.0 #X0
+INIT_GBM = 1.0 #X0
 
 # AR process
 SAMPLES_AR = 50000
@@ -31,10 +31,10 @@ PHI = -0.1
 STD_AR = 1.0
 
 # Hyperparameters training
-LEARNING_RATE = 1e-2 #CHATGPT: The learning rate determines the size of the steps taken during the optimization process to update the model's parameters (like weights). It controls how quickly or slowly a model learns from the data during training.
+LEARNING_RATE = 1e-4 #CHATGPT: The learning rate determines the size of the steps taken during the optimization process to update the model's parameters (like weights). It controls how quickly or slowly a model learns from the data during training.
 GRADIENT_STEPS = 2500 #Number of epochs
 BATCH_SIZE = 1500 #CHATGPT: The batch size determines the number of training samples processed before the model's internal parameters (weights) are updated.
-N = 40 #Dimension of random signature
+N = 80 #Dimension of random signature
 
 # R-SIG-W1
 RESERVOIR_DIM_METRIC = N #Not sure what this one is, I believe just for evaluation at the end. 
@@ -64,7 +64,7 @@ lambda1, lambda2 = (torch.randn(RESERVOIR_DIM_GEN, 1, device = DEVICE),
 
 
 # Data
-DATA_ID = "GBM"
+DATA_ID = "BM"
 
 # Generator
 GENERATOR_ID = "NeuralSDE"
