@@ -10,7 +10,7 @@ import torch
 import math
 import numpy as np
 import pandas as pd
-import yfinance as yf
+#import yfinance as yf
 from utils import *
 
 

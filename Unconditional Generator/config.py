@@ -16,8 +16,8 @@ TIME = 5.0 #Final time (T in experiments)
 
 # Brownian motion
 SAMPLES_BM = 10000
-DRIFT_BM = 0.1
-STD_BM = 0.2 
+DRIFT_BM = 0.5
+STD_BM = 0.1
 
 # Geometric Brownian motion
 SAMPLES_GBM = 10000 #Number of samples 
@@ -34,7 +34,7 @@ STD_AR = 1.0
 LEARNING_RATE = 1e-4 #CHATGPT: The learning rate determines the size of the steps taken during the optimization process to update the model's parameters (like weights). It controls how quickly or slowly a model learns from the data during training.
 GRADIENT_STEPS = 2500 #Number of epochs
 BATCH_SIZE = 1500 #CHATGPT: The batch size determines the number of training samples processed before the model's internal parameters (weights) are updated.
-N = 80 #Dimension of random signature
+N = 40 #Dimension of random signature
 
 # R-SIG-W1
 RESERVOIR_DIM_METRIC = N #Not sure what this one is, I believe just for evaluation at the end. 

@@ -6,7 +6,7 @@ We use code from Ni et al. (2021), see GitHub:
 https://github.com/SigCGANs/Sig-Wasserstein-GANs
 """
 
-import signatory
+#import signatory
 import torch
 from torch import optim
 import math
