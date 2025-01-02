@@ -12,3 +12,8 @@ Unconditional Generator/evaluation/
 best_generators/
 evaluation/
 /Unconditional Generator/__pycache__
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
